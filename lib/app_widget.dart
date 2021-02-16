@@ -1,16 +1,23 @@
+import 'package:cateira_de_ativos/app_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'home_page.dart';
+import 'login_page.dart';
 
 class AppWidget extends StatelessWidget {
-  final String title;
-
-  const AppWidget({Key key, this.title}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(primaryColor: Colors.blue),
-      home: HomePage(),
-    );
+    return AnimatedBuilder(
+        animation: AppController.instance,
+        builder: (context, child) {
+          return MaterialApp(
+            theme: ThemeData(
+                primarySwatch: Colors.blue,
+                brightness: AppController.instance.isDarkTheme
+                    ? Brightness.dark
+                    : Brightness.light),
+            home: LoginPage(),
+          );
+        });
   }
 }
