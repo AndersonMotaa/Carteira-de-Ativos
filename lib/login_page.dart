@@ -1,3 +1,4 @@
+import 'package:cateira_de_ativos/home_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -40,7 +41,9 @@ class _LoginPageState extends State<LoginPage> {
               RaisedButton(
                 onPressed: () {
                   if (email == 'teste@unit.com' && password == '123') {
-                    print('correto');
+                    Navigator.of(context).pushReplacementNamed(
+                      '/home',
+                    );
                   } else {
                     print('Login ou senha inválido');
                   }
