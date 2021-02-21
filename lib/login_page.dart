@@ -18,8 +18,14 @@ class _LoginPageState extends State<LoginPage> {
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Container(height: 100),
+              Container(
+                  width: 250,
+                  height: 250,
+                  child: Image.asset('assets/images/logo.png')),
               TextField(
                 onChanged: (text) {
                   email = text;
