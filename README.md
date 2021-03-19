@@ -1,4 +1,4 @@
-# cateira_de_ativos
+# carteira_de_investimentos
 
 A new Flutter project.
 
