@@ -1,7 +1,12 @@
+import 'dart:convert';
 import 'dart:ui';
-
-import 'package:carteira_de_investimentos/cadastro_usuario.dart';
+import 'package:http/http.dart' as http;
+import 'package:investimentos/cadastro_usuario.dart';
 import 'package:flutter/material.dart';
+
+String email = "";
+String senha = "";
+String nome = "";
 
 class Login extends StatefulWidget {
   @override
@@ -9,9 +14,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String email = '';
-  String password = '';
-
   Widget _body() {
     return Container(
       child: SingleChildScrollView(
@@ -67,6 +69,7 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     child: TextField(
+                      controller: _controllerEmail,
                       decoration: InputDecoration(
                         icon: Icon(
                           Icons.email,
@@ -101,12 +104,13 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     child: TextField(
+                      controller: _controllerSenha,
                       decoration: InputDecoration(
                         icon: Icon(
                           Icons.vpn_key_rounded,
                           color: Colors.grey,
                         ),
-                        hintText: 'Password',
+                        hintText: 'Senha',
                       ),
                     ),
                   ),
@@ -119,7 +123,7 @@ class _LoginState extends State<Login> {
                         right: 32,
                       ),
                       child: Text(
-                        'Forgot password ?',
+                        'Esqueceu sua senha ?',
                         style: TextStyle(color: Colors.grey),
                       ),
                     ),
@@ -127,12 +131,13 @@ class _LoginState extends State<Login> {
                   //login
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed('Home');
+                      _getEmail();
+                      //Navigator.of(context).pushNamed('Home');
                     },
                     child: Container(
-                      margin: EdgeInsets.only(top: 30),
+                      margin: EdgeInsets.only(top: 25),
                       width: MediaQuery.of(context).size.width / 1.2,
-                      height: 50,
+                      height: 45,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -146,7 +151,7 @@ class _LoginState extends State<Login> {
                       ),
                       child: Center(
                         child: Text(
-                          'LOGIN',
+                          'ENTRAR',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -163,9 +168,9 @@ class _LoginState extends State<Login> {
                       Navigator.of(context).pushNamed('cadastro_usuario');
                     },
                     child: Container(
-                      margin: EdgeInsets.only(top: 30),
+                      margin: EdgeInsets.only(top: 20),
                       width: MediaQuery.of(context).size.width / 1.2,
-                      height: 50,
+                      height: 45,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -198,6 +203,9 @@ class _LoginState extends State<Login> {
     );
   }
 
+  //String email = '';
+  //String password = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -208,5 +216,66 @@ class _LoginState extends State<Login> {
         ],
       ),
     );
+  }
+
+  List<String> loginString = <String>[""];
+  List<String> senhaString = <String>[""];
+  TextEditingController _controllerEmail = TextEditingController();
+  TextEditingController _controllerSenha = TextEditingController();
+
+  Uri urlLogin = Uri.https(
+      "investimentos-c0f48-default-rtdb.firebaseio.com", "/login.json");
+
+  Future<void> _getEmail() {
+    return http.get(urlLogin).then((response) {
+      Map<String, dynamic> map = jsonDecode(response.body);
+      map.forEach((key, value) {
+        //print(listString.last);
+        if (_controllerEmail.text == loginString.last &&
+            _controllerSenha.text == senhaString.last) {
+          email = _controllerEmail.text;
+          senha = _controllerSenha.text;
+          //print(teste);
+          //print(loginString.last);
+          //print(senhaString.last);
+          _getUsuario();
+          Navigator.of(context).pushNamed('Home');
+        } else {
+          loginString.add(map[key]["email"]);
+          senhaString.add(map[key]["senha"]);
+          //print(loginString.last);
+          //print(senhaString.last);
+          //print("denovo");
+        }
+      });
+    });
+  }
+
+  List<String> emailString = <String>[""];
+  List<String> nomeString = <String>[""];
+
+  Uri urlUsuario = Uri.https(
+      "investimentos-c0f48-default-rtdb.firebaseio.com", "/usuario.json");
+
+  Future<void> _getUsuario() {
+    return http.get(urlUsuario).then((response) {
+      Map<String, dynamic> map = jsonDecode(response.body);
+      map.forEach((key, value) {
+        //print(listString.last);
+        if (email == emailString.last) {
+          //print("funciona");
+          print(emailString.last);
+          print(nomeString.last);
+          nome = nomeString.last;
+        } else {
+          emailString.add(map[key]["email"]);
+          nomeString.add(map[key]["nome"]);
+          //nome = nomeString.last;
+          //print(emailString.last);
+          //print(nomeString.last);
+          print("denovo");
+        }
+      });
+    });
   }
 }

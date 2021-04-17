@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class cadastro_usuario extends StatefulWidget {
   @override
@@ -6,6 +9,9 @@ class cadastro_usuario extends StatefulWidget {
 }
 
 class _cadastro_usuarioState extends State<cadastro_usuario> {
+// String senha = "";
+//String confirmarSenha = "";
+
   Widget _body() {
     return ListView(
       children: [
@@ -57,6 +63,7 @@ class _cadastro_usuarioState extends State<cadastro_usuario> {
             ],
           ),
           child: TextField(
+            controller: _controllerNome,
             decoration: InputDecoration(
               icon: Icon(
                 Icons.account_box,
@@ -95,6 +102,7 @@ class _cadastro_usuarioState extends State<cadastro_usuario> {
             ],
           ),
           child: TextField(
+            controller: _controllerEmail,
             decoration: InputDecoration(
               icon: Icon(
                 Icons.email,
@@ -105,7 +113,7 @@ class _cadastro_usuarioState extends State<cadastro_usuario> {
           ),
         ),
 
-        //Password
+        //Senha
         Container(
           width: MediaQuery.of(context).size.width / 1.2,
           height: 50,
@@ -133,17 +141,18 @@ class _cadastro_usuarioState extends State<cadastro_usuario> {
             ],
           ),
           child: TextField(
+            controller: _controllerSenha,
             decoration: InputDecoration(
               icon: Icon(
                 Icons.vpn_key_rounded,
                 color: Colors.grey,
               ),
-              hintText: 'Password',
+              hintText: 'Senha',
             ),
           ),
         ),
 
-        //Repeat Password - confirmacão da senha
+        //confirmacão da senha
         Container(
           width: MediaQuery.of(context).size.width / 1.2,
           height: 50,
@@ -171,12 +180,13 @@ class _cadastro_usuarioState extends State<cadastro_usuario> {
             ],
           ),
           child: TextField(
+            controller: _controllerConfirmarSenha,
             decoration: InputDecoration(
               icon: Icon(
                 Icons.vpn_key_rounded,
                 color: Colors.grey,
               ),
-              hintText: ' Repeat Password',
+              hintText: ' Confirmar senha',
             ),
           ),
         ),
@@ -184,6 +194,7 @@ class _cadastro_usuarioState extends State<cadastro_usuario> {
         //Botão Cadastrar
         new GestureDetector(
           onTap: () {
+            _verificarSenha();
             Navigator.of(context).pushNamed('Login');
           },
           child: Container(
@@ -221,10 +232,56 @@ class _cadastro_usuarioState extends State<cadastro_usuario> {
     );
   }
 
+  List<String> listString = <String>[];
+  Uri urlUsuario = Uri.https(
+      "investimentos-c0f48-default-rtdb.firebaseio.com", "/usuario.json");
+  Uri urlLogin = Uri.https(
+      "investimentos-c0f48-default-rtdb.firebaseio.com", "/login.json");
+
+  TextEditingController _controllerNome = TextEditingController();
+  TextEditingController _controllerEmail = TextEditingController();
+  TextEditingController _controllerSenha = TextEditingController();
+  TextEditingController _controllerConfirmarSenha = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _body(),
+    );
+  }
+
+  void _verificarSenha() {
+    if (_controllerSenha.text == _controllerConfirmarSenha.text) {
+      _addLogin();
+      _addUsuario();
+    } else {
+      print(_controllerSenha.text);
+      print(_controllerConfirmarSenha.text);
+      print("Erro!");
+    }
+  }
+
+  void _addUsuario() {
+    http.post(
+      urlUsuario,
+      body: json.encode(
+        {
+          "nome": _controllerNome.text,
+          "email": _controllerEmail.text,
+        },
+      ),
+    );
+  }
+
+  void _addLogin() {
+    http.post(
+      urlLogin,
+      body: json.encode(
+        {
+          "email": _controllerEmail.text,
+          "senha": _controllerSenha.text,
+        },
+      ),
     );
   }
 }

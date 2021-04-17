@@ -1,6 +1,6 @@
 {
-    "name": "carteira_de_investimentos",
-    "short_name": "carteira_de_investimentos",
+    "name": "investimentos",
+    "short_name": "investimentos",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,4 +1,4 @@
-package com.example.carteira_de_investimentos
+package com.example.investimentos
 
 import io.flutter.embedding.android.FlutterActivity
 
