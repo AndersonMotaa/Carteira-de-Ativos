@@ -234,9 +234,9 @@ class _cadastro_usuarioState extends State<cadastro_usuario> {
 
   List<String> listString = <String>[];
   Uri urlUsuario = Uri.https(
-      "investimentos-c0f48-default-rtdb.firebaseio.com", "/usuario.json");
+      "investimentos-48662-default-rtdb.firebaseio.com", "/usuario.json");
   Uri urlLogin = Uri.https(
-      "investimentos-c0f48-default-rtdb.firebaseio.com", "/login.json");
+      "investimentos-48662-default-rtdb.firebaseio.com", "/login.json");
 
   TextEditingController _controllerNome = TextEditingController();
   TextEditingController _controllerEmail = TextEditingController();

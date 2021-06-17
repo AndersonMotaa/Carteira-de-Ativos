@@ -168,7 +168,7 @@ class _LoginState extends State<Login> {
                       Navigator.of(context).pushNamed('cadastro_usuario');
                     },
                     child: Container(
-                      margin: EdgeInsets.only(top: 20),
+                      margin: EdgeInsets.only(top: 15),
                       width: MediaQuery.of(context).size.width / 1.2,
                       height: 45,
                       decoration: BoxDecoration(
@@ -224,7 +224,7 @@ class _LoginState extends State<Login> {
   TextEditingController _controllerSenha = TextEditingController();
 
   Uri urlLogin = Uri.https(
-      "investimentos-c0f48-default-rtdb.firebaseio.com", "/login.json");
+      "investimentos-48662-default-rtdb.firebaseio.com", "/login.json");
 
   Future<void> _getEmail() {
     return http.get(urlLogin).then((response) {
@@ -255,7 +255,7 @@ class _LoginState extends State<Login> {
   List<String> nomeString = <String>[""];
 
   Uri urlUsuario = Uri.https(
-      "investimentos-c0f48-default-rtdb.firebaseio.com", "/usuario.json");
+      "investimentos-48662-default-rtdb.firebaseio.com", "/usuario.json");
 
   Future<void> _getUsuario() {
     return http.get(urlUsuario).then((response) {
