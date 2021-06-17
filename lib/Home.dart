@@ -125,7 +125,37 @@ class _HomeState extends State<Home> {
                       child: ListTile(
                         title: Text(investimento.ativo),
                         subtitle: Text(
-                            "Valor Médio= ${investimento.valorMedio} Quant= ${investimento.quantidade} Total= ${investimento.valorTotal}"),
+                            "Valor Médio= ${investimento.valorMedio}\n Quant= ${investimento.quantidade}\n Total= ${investimento.valorTotal}"),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                //_aumentarAtivo();
+                                //investimento: investimento);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(right: 15),
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                //_diminuirAtivo();
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(right: 0),
+                                child: Icon(
+                                  Icons.remove,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     );
                   }))

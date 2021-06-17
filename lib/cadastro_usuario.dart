@@ -141,6 +141,7 @@ class _cadastro_usuarioState extends State<cadastro_usuario> {
             ],
           ),
           child: TextField(
+            obscureText: true,
             controller: _controllerSenha,
             decoration: InputDecoration(
               icon: Icon(
@@ -180,6 +181,7 @@ class _cadastro_usuarioState extends State<cadastro_usuario> {
             ],
           ),
           child: TextField(
+            obscureText: true,
             controller: _controllerConfirmarSenha,
             decoration: InputDecoration(
               icon: Icon(
